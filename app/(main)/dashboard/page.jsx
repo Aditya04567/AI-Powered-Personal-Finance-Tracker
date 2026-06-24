@@ -38,7 +38,7 @@ export default async function DashboardPage() {
             {greeting}, {user?.firstName || "User"} <span className="inline-block hover:animate-wave">👋</span>
           </h1>
           <p className="text-sm font-medium text-slate-500">
-            Here's what's happening with your finances today.
+            Here&apos;s what&apos;s happening with your finances today.
           </p>
         </div>
         
