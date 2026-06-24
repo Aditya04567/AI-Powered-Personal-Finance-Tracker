@@ -89,7 +89,7 @@ export function MobileNav() {
             {/* Navigation Links */}
             <nav className="flex-1 px-4 py-2 space-y-1.5 overflow-y-auto custom-scrollbar">
               {navItems.map((item) => {
-                const isActive = pathname === item.href || pathname.startsWith(`${item.href}/`);
+                const isActive = pathname === item.href || (pathname?.startsWith(`${item.href}/`) ?? false);
                 return (
                   <Link
                     key={item.name}
@@ -133,11 +133,11 @@ export function MobileNav() {
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
                     <div className="w-12 h-12 rounded-full bg-[#6b46c1] text-white flex items-center justify-center text-lg font-bold shrink-0">
-                      {user.firstName?.charAt(0) || user.emailAddresses[0]?.emailAddress?.charAt(0)?.toUpperCase() || "C"}
+                      {user.firstName?.charAt(0) || user.emailAddresses?.[0]?.emailAddress?.charAt(0)?.toUpperCase() || "C"}
                     </div>
                     <div className="overflow-hidden">
                       <p className="text-sm font-bold text-slate-900 truncate">{user.firstName || "Crish Agrawal"}</p>
-                      <p className="text-xs text-slate-500 font-medium truncate">{user.emailAddresses[0]?.emailAddress || "crish@example.com"}</p>
+                      <p className="text-xs text-slate-500 font-medium truncate">{user.emailAddresses?.[0]?.emailAddress || "crish@example.com"}</p>
                     </div>
                   </div>
                   <ChevronRight className="w-5 h-5 text-slate-400 shrink-0" />
