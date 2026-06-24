@@ -1,8 +1,8 @@
 <p align="center">
-  <img src="public/logo.png" alt="Welth Logo" width="80" />
+  <img src="public/logo.png" alt="Spendly Logo" width="80" />
 </p>
 
-<h1 align="center">Welth — AI-Powered Finance Tracker</h1>
+<h1 align="center">Spendly — AI-Powered Finance Tracker</h1>
 
 <p align="center">
   A full-stack intelligent personal finance platform built with <strong>Next.js 15</strong>, <strong>Gemini AI</strong>, and <strong>Supabase</strong>.<br/>
@@ -224,7 +224,7 @@ npx inngest-cli@latest dev
 
 ## 📸 Screenshots
 
-<img width="1470" alt="Welth Dashboard" src="https://github.com/user-attachments/assets/1bc50b85-b421-4122-8ba4-ae68b2b61432">
+<img width="1470" alt="Spendly Dashboard" src="https://github.com/user-attachments/assets/1bc50b85-b421-4122-8ba4-ae68b2b61432">
 
 ---
 
