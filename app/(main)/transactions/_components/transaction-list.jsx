@@ -112,14 +112,19 @@ export function TransactionList({ transactions, accounts }) {
 
       {/* Table Body */}
       <div className="space-y-2 mb-6">
-        {displayData.map((t, i) => (
+        {displayData.map((t, i) => {
+          const tName = t.name || t.description || "Transaction";
+          const account = accounts?.find(a => a.id === t.accountId);
+          const accName = t.accountName || account?.name || "Bank Account";
+          
+          return (
           <div key={i} className="grid grid-cols-12 gap-4 py-3 items-center hover:bg-slate-50 rounded-xl transition-colors group cursor-pointer">
             <div className="col-span-4 flex items-center gap-3 pl-2">
               <div className={`w-9 h-9 rounded-full flex items-center justify-center shrink-0 text-white font-bold text-xs ${getCategoryIconColor(t.category)}`}>
-                {t.name.charAt(0)}
+                {tName.charAt(0).toUpperCase()}
               </div>
               <div className="min-w-0">
-                <p className="text-xs font-bold text-slate-900 truncate">{t.name || t.description}</p>
+                <p className="text-xs font-bold text-slate-900 truncate">{tName}</p>
                 <p className="text-[10px] font-semibold text-slate-400 truncate">{t.category}</p>
               </div>
             </div>
@@ -131,7 +136,7 @@ export function TransactionList({ transactions, accounts }) {
             </div>
 
             <div className="col-span-2">
-              <p className="text-xs font-bold text-slate-900 truncate">{t.accountName || "HDFC Bank"}</p>
+              <p className="text-xs font-bold text-slate-900 truncate">{accName}</p>
               <p className="text-[10px] font-semibold text-slate-400">•••• 1234</p>
             </div>
 
@@ -149,7 +154,8 @@ export function TransactionList({ transactions, accounts }) {
               </button>
             </div>
           </div>
-        ))}
+          );
+        })}
       </div>
 
       {/* Pagination */}
