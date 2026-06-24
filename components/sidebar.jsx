@@ -50,7 +50,7 @@ export function Sidebar() {
       {/* Navigation */}
       <nav className="flex-1 px-4 py-6 space-y-2 overflow-y-auto custom-scrollbar">
         {navItems.map((item) => {
-          const isActive = pathname === item.href || (pathname?.startsWith(`${item.href}/`) ?? false);
+          const isActive = pathname === item.href || pathname.startsWith(`${item.href}/`);
           return (
             <Link
               key={item.name}
@@ -86,14 +86,14 @@ export function Sidebar() {
 
         {/* User Profile */}
         {user && (
-          <div className="flex items-center justify-between p-2 rounded-xl hover:bg-slate-50 transition-colors">
+          <div className="flex items-center justify-between p-2 rounded-xl hover:bg-slate-50 cursor-pointer transition-colors">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-full bg-slate-700 text-white flex items-center justify-center text-sm font-semibold shrink-0">
-                {user.firstName?.charAt(0) || user.emailAddresses?.[0]?.emailAddress?.charAt(0)?.toUpperCase()}
+                {user.firstName?.charAt(0) || user.emailAddresses[0]?.emailAddress?.charAt(0)?.toUpperCase()}
               </div>
               <div className="overflow-hidden">
                 <p className="text-sm font-bold text-slate-900 truncate">{user.firstName || "User"}</p>
-                <p className="text-[10px] text-slate-500 font-medium truncate">{user.emailAddresses?.[0]?.emailAddress}</p>
+                <p className="text-[10px] text-slate-500 font-medium truncate">{user.emailAddresses[0]?.emailAddress}</p>
               </div>
             </div>
             <ChevronRight className="w-4 h-4 text-slate-400 shrink-0" />
