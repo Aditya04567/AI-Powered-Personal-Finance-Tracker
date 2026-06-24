@@ -42,6 +42,11 @@
 - **Bot Protection** — ArcJet shield + bot detection middleware for API route protection
 - **Rate Limiting** — Throttled recurring transaction processing (10 per user/minute)
 
+### 🎨 Premium User Interface
+- **Modern Landing Page** — Beautiful, Monarch-inspired design with custom animations, glassmorphism, and gradients
+- **Interactive UI Mockups** — CSS-driven responsive phone and chart mockups mimicking the actual app experience
+- **Accessible & Responsive** — Perfect scaling across mobile, tablet, and desktop viewports using Tailwind CSS
+
 ---
 
 ## 🛠 Tech Stack
