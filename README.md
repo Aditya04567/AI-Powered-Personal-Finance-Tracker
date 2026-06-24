@@ -1,227 +1,155 @@
-<p align="center">
-  <img src="public/logo.png" alt="Spendly Logo" width="80" />
-</p>
+<div align="center">
+  <img src="public/logo.png" alt="Spendly Logo" width="100" />
 
-<h1 align="center">Spendly — AI-Powered Finance Tracker</h1>
+  <h1>Spendly | Intelligent Personal Finance Platform</h1>
 
-<p align="center">
-  A full-stack intelligent personal finance platform built with <strong>Next.js 15</strong>, <strong>Gemini AI</strong>, and <strong>Supabase</strong>.<br/>
-  Track expenses, scan receipts with AI, automate recurring payments, and receive personalized financial insights — all in one place.
-</p>
+  <p>
+    A production-ready, full-stack financial management platform leveraging <strong>Next.js 15</strong>, <strong>Google Gemini AI</strong>, and <strong>Supabase</strong> to automate expense tracking and deliver actionable financial intelligence.
+  </p>
 
-<p align="center">
-  <a href="#features">Features</a> •
-  <a href="#tech-stack">Tech Stack</a> •
-  <a href="#architecture">Architecture</a> •
-  <a href="#getting-started">Getting Started</a> •
-  <a href="#screenshots">Screenshots</a>
-</p>
-
----
-
-## ✨ Features
-
-### 🤖 AI-Powered Intelligence
-- **Smart Receipt Scanner** — Upload a receipt image and Gemini AI extracts amount, date, merchant, category, and description automatically
-- **Monthly Financial Insights** — AI-generated actionable spending analysis delivered via email every month
-- **Intelligent Categorization** — Automatic transaction categorization across 15+ expense categories
-
-### 💰 Financial Management
-- **Multi-Account Support** — Manage multiple bank accounts (Savings & Current) with real-time balance tracking
-- **Transaction Tracking** — Full CRUD for income and expense transactions with filtering, sorting, and search
-- **Recurring Transactions** — Set up daily, weekly, monthly, or yearly recurring payments with automated processing
-- **Budget Management** — Set monthly budgets with automated alerts when spending exceeds 80% threshold
-
-### 📊 Analytics & Reporting
-- **Interactive Dashboard** — Visual spending breakdown with bar charts and category-wise pie charts (Recharts)
-- **Monthly Email Reports** — Automated financial summaries with AI insights sent on the 1st of each month
-- **Budget Alerts** — Email notifications triggered every 6 hours when budget thresholds are exceeded
-
-### 🔒 Security & Infrastructure
-- **Authentication** — Secure sign-up/sign-in with Clerk (OAuth, email, and social providers)
-- **Bot Protection** — ArcJet shield + bot detection middleware for API route protection
-- **Rate Limiting** — Throttled recurring transaction processing (10 per user/minute)
-
-### 🎨 Premium User Interface
-- **Modern Landing Page** — Beautiful, Monarch-inspired design with custom animations, glassmorphism, and gradients
-- **Interactive UI Mockups** — CSS-driven responsive phone and chart mockups mimicking the actual app experience
-- **Accessible & Responsive** — Perfect scaling across mobile, tablet, and desktop viewports using Tailwind CSS
+  <p>
+    <a href="#features">Features</a> •
+    <a href="#tech-stack">Tech Stack</a> •
+    <a href="#system-architecture">Architecture</a> •
+    <a href="#technical-highlights">Technical Highlights</a> •
+    <a href="#getting-started">Getting Started</a>
+  </p>
+</div>
 
 ---
 
-## 🛠 Tech Stack
+## 💡 The Vision
 
-| Layer | Technology |
-|---|---|
-| **Framework** | Next.js 15 (App Router, Turbopack, Server Actions, RSC) |
-| **Language** | JavaScript (ES2024) |
-| **AI/ML** | Google Gemini 3.5 Flash (`@google/generative-ai`) |
-| **Database** | PostgreSQL (Supabase) |
-| **ORM** | Prisma 6 |
-| **Authentication** | Clerk |
-| **Background Jobs** | Inngest (cron-based event-driven functions) |
-| **Email** | Resend + React Email |
-| **UI Components** | Radix UI + shadcn/ui |
-| **Styling** | Tailwind CSS 3.4 |
-| **Charts** | Recharts |
-| **Security** | ArcJet (shield, bot detection) |
-| **Deployment** | Vercel (recommended) |
+Managing personal finances often involves manual data entry, disconnected spreadsheets, and reactive budgeting. **Spendly** solves this by automating the tedious parts of financial tracking—utilizing AI to parse receipts, automatically categorizing transactions, and utilizing background jobs to manage recurring expenses and real-time budget alerts. 
+
+## ✨ Key Features
+
+### 🤖 AI-Driven Automation
+* **Computer Vision Receipt Parsing:** Integrated **Google Gemini 3.5 Flash** to analyze receipt images, automatically extracting metadata (merchant, amount, date) and intelligently categorizing the expense.
+* **Algorithmic Insights:** Generates personalized monthly financial reports, analyzing spending velocity and category distributions.
+
+### 💰 Core Financial Engine
+* **Multi-Account Architecture:** Support for isolated tracking across multiple bank accounts (Checking, Savings, Credit).
+* **Automated Recurring Transactions:** CRON-driven engine that processes scheduled daily, weekly, or monthly payments with built-in idempotency to prevent duplicate charges.
+* **Proactive Budget Constraints:** Real-time budget monitoring with automated email thresholds triggered when spending exceeds 80%.
+
+### 🎨 Premium User Experience (UX/UI)
+* **Monarch-Inspired Aesthetics:** A modern, glassmorphic landing page and dashboard featuring smooth micro-interactions, responsive CSS grids, and accessible typography.
+* **Interactive Data Visualization:** Custom SVG and Recharts-based visualizations for cash flow, net worth progression, and category breakdown.
+
+### 🛡️ Enterprise-Grade Security
+* **Multi-Layer Authentication:** Integrated **Clerk** for secure OAuth and JWT-based session management.
+* **Edge Security:** Implemented **ArcJet** middleware for bot protection, rate limiting, and request shielding at the edge.
 
 ---
 
-## 🏗 Architecture
+## 🛠️ Tech Stack & Decisions
 
-```
-┌─────────────────────────────────────────────────────┐
-│                    CLIENT (Next.js)                  │
-│  ┌──────────┐  ┌───────────┐  ┌──────────────────┐  │
-│  │ Dashboard │  │ Accounts  │  │   Transactions   │  │
-│  │ (Charts)  │  │ (CRUD)    │  │ (CRUD + Scanner) │  │
-│  └──────────┘  └───────────┘  └──────────────────┘  │
-├─────────────────────────────────────────────────────┤
-│               SERVER ACTIONS (Next.js)               │
-│  ┌──────────┐  ┌───────────┐  ┌──────────────────┐  │
-│  │ dashboard │  │  account  │  │   transaction    │  │
-│  │  .js      │  │   .js     │  │     .js          │  │
-│  └──────────┘  └───────────┘  └──────────────────┘  │
-├─────────────────────────────────────────────────────┤
-│                   MIDDLEWARE LAYER                    │
-│         Clerk Auth  ←→  ArcJet Security              │
-├─────────────────────────────────────────────────────┤
-│               BACKGROUND JOBS (Inngest)              │
-│  ┌────────────────┐ ┌────────────┐ ┌─────────────┐  │
-│  │   Recurring     │ │  Monthly   │ │   Budget    │  │
-│  │  Transactions   │ │  Reports   │ │   Alerts    │  │
-│  │  (daily cron)   │ │ (monthly)  │ │ (6-hourly)  │  │
-│  └────────────────┘ └────────────┘ └─────────────┘  │
-├─────────────────────────────────────────────────────┤
-│                   DATA LAYER                         │
-│    Prisma ORM  ←→  Supabase PostgreSQL               │
-├─────────────────────────────────────────────────────┤
-│                 EXTERNAL SERVICES                    │
-│   Gemini AI  •  Resend Email  •  Clerk  •  ArcJet   │
-└─────────────────────────────────────────────────────┘
+I deliberately chose a modern, edge-compatible stack to ensure high performance, type safety, and scalability.
+
+| Category | Technologies | Justification |
+|---|---|---|
+| **Frontend Framework** | Next.js 15, React 19 (App Router) | Leveraged Server Components (RSC) and Server Actions for zero-API data fetching and enhanced SEO. |
+| **Styling & UI** | Tailwind CSS, Radix UI, shadcn/ui | Utility-first styling for rapid, highly-customizable, and accessible component design. |
+| **Database & ORM** | PostgreSQL (Supabase), Prisma ORM | Relational integrity for financial data with Prisma providing strict type-safety across the application boundary. |
+| **Background Jobs** | Inngest | Event-driven background processing for reliable execution of budget alerts and recurring transactions without serverless timeout limits. |
+| **AI Integration** | Google Gemini SDK | Multimodal capabilities used for fast and accurate optical character recognition (OCR) on receipts. |
+| **Authentication** | Clerk | Out-of-the-box identity management with robust session control and 2FA capabilities. |
+
+---
+
+## 🏗️ System Architecture
+
+Spendly employs a decoupled, serverless-first architecture designed for resilience and performance.
+
+```text
+┌─────────────────────────────────────────────────────────────┐
+│                      CLIENT (Browser)                       │
+│  [ React Server Components ]   [ Interactive Dashboards ]   │
+└──────────────────────┬───────────────────────────────┬──────┘
+                       │                               │
+┌──────────────────────▼───────────────────────────────▼──────┐
+│                    EDGE MIDDLEWARE                          │
+│  [ Clerk Auth Validation ] ──► [ ArcJet Rate/Bot Shield ]   │
+└──────────────────────┬──────────────────────────────────────┘
+                       │
+┌──────────────────────▼──────────────────────────────────────┐
+│                  NEXT.JS SERVER (Node.js)                   │
+│  [ Server Actions ] ──► [ Zod Validation ] ──► [ Prisma ]   │
+└────────┬─────────────┬─────────────┬─────────────┬──────────┘
+         │             │             │             │
+┌────────▼────┐ ┌──────▼─────┐ ┌─────▼─────┐ ┌─────▼──────────┐
+│ Google      │ │ Inngest    │ │ Resend    │ │ Supabase       │
+│ Gemini AI   │ │ Cron Jobs  │ │ React Mail│ │ PostgreSQL     │
+│ (OCR/LLM)   │ │ (Events)   │ │ (Alerts)  │ │ (Storage/DB)   │
+└─────────────┘ └────────────┘ └───────────┘ └────────────────┘
 ```
 
 ---
 
-## 📁 Project Structure
+## 🧠 Technical Highlights & Problem Solving
 
-```
-ai-finance-platform/
-├── actions/                  # Server Actions
-│   ├── account.js            # Account CRUD operations
-│   ├── budget.js             # Budget management
-│   ├── dashboard.js          # Dashboard data aggregation
-│   ├── transaction.js        # Transactions + AI receipt scanner
-│   └── send-email.js         # Email sending utility
-├── app/
-│   ├── (auth)/               # Auth pages (sign-in, sign-up)
-│   ├── (main)/
-│   │   ├── account/          # Account detail pages
-│   │   ├── dashboard/        # Main dashboard
-│   │   └── transaction/      # Transaction create page
-│   ├── api/                  # API routes (Inngest, webhooks)
-│   └── page.js               # Landing page
-├── components/
-│   ├── ui/                   # shadcn/ui components
-│   ├── header.jsx            # Navigation header
-│   ├── hero.jsx              # Landing page hero
-│   └── create-account-drawer.jsx
-├── emails/
-│   └── template.jsx          # React Email templates
-├── lib/
-│   ├── inngest/              # Background job definitions
-│   │   ├── client.js         # Inngest client
-│   │   └── function.js       # 3 cron functions
-│   └── prisma.js             # Prisma client singleton
-├── prisma/
-│   └── schema.prisma         # Database schema (4 models)
-└── middleware.js              # Clerk + ArcJet middleware chain
-```
+During development, I tackled several complex engineering challenges:
 
----
+1. **Idempotent Cron Jobs in a Serverless Environment:** 
+   * *Challenge:* Standard serverless functions time out or execute multiple times, causing duplicate financial transactions.
+   * *Solution:* Implemented **Inngest** to decouple background tasks into event-driven workflows. Recurring transactions are processed asynchronously, ensuring reliability and preventing double-billing.
 
-## 🗄 Database Schema
+2. **Multimodal AI Integration & Hallucination Mitigation:**
+   * *Challenge:* OCR models often hallucinate monetary values or format dates incorrectly.
+   * *Solution:* Engineered strict prompting constraints for Gemini AI and piped the output through **Zod schema validation** on the backend, ensuring the database only ingests correctly formatted `Float` and `DateTime` objects.
 
-The app uses **4 core models** with full relational integrity:
-
-| Model | Description |
-|---|---|
-| `User` | Linked to Clerk via `clerkUserId`, has accounts, transactions, budgets |
-| `Account` | Savings/Current accounts with balance tracking |
-| `Transaction` | Income/Expense entries with recurring support and receipt URLs |
-| `Budget` | Monthly budget per user with alert tracking |
+3. **Type-Safe Full-Stack Data Flow:**
+   * *Challenge:* Ensuring frontend UI components perfectly align with database schema changes.
+   * *Solution:* Used **Prisma** to generate strict TypeScript types. Passed data securely through Next.js Server Actions, eliminating the need for boilerplate REST API types and guaranteeing end-to-end type safety.
 
 ---
 
 ## 🚀 Getting Started
 
-### Prerequisites
+To run this project locally, follow these steps:
 
-- **Node.js** 18+
-- **npm** or **yarn**
-- Accounts on: [Supabase](https://supabase.com), [Clerk](https://clerk.com), [Google AI Studio](https://aistudio.google.com), [Resend](https://resend.com), [ArcJet](https://arcjet.com)
-
-### 1. Clone the repository
-
+### 1. Clone & Install
 ```bash
 git clone https://github.com/Aditya04567/Ai--Finance-tracker.git
 cd Ai--Finance-tracker
-```
-
-### 2. Install dependencies
-
-```bash
 npm install
 ```
 
-### 3. Set up environment variables
-
-Create a `.env` file in the root directory:
-
+### 2. Environment Configuration
+Create a `.env` file in the root directory and populate it with your respective API keys:
 ```env
-# Supabase
-DATABASE_URL=your_supabase_pooler_url
-DIRECT_URL=your_supabase_direct_url
+# Database (Supabase)
+DATABASE_URL="your_supabase_pooler_url"
+DIRECT_URL="your_supabase_direct_url"
 
-# Clerk Authentication
-NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=your_clerk_publishable_key
-CLERK_SECRET_KEY=your_clerk_secret_key
+# Authentication (Clerk)
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY="your_publishable_key"
+CLERK_SECRET_KEY="your_secret_key"
 NEXT_PUBLIC_CLERK_SIGN_IN_URL=/sign-in
 NEXT_PUBLIC_CLERK_SIGN_UP_URL=/sign-up
 NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL=/onboarding
 NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL=/onboarding
 
-# Google Gemini AI
-GEMINI_API_KEY=your_gemini_api_key
-
-# Resend Email
-RESEND_API_KEY=your_resend_api_key
-
-# ArcJet Security
-ARCJET_KEY=your_arcjet_key
+# AI & Services
+GEMINI_API_KEY="your_gemini_api_key"
+RESEND_API_KEY="your_resend_api_key"
+ARCJET_KEY="your_arcjet_key"
 ```
 
-### 4. Push database schema
-
+### 3. Database Initialization
+Synchronize the Prisma schema with your Supabase PostgreSQL instance:
 ```bash
 npx prisma db push
 ```
 
-### 5. Run the development server
-
+### 4. Run Development Servers
+Start the Next.js app and the local Inngest dev server concurrently:
 ```bash
+# Terminal 1: Next.js
 npm run dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) in your browser.
-
-### 6. (Optional) Run Inngest Dev Server
-
-To test background jobs locally:
-
-```bash
+# Terminal 2: Inngest (for testing background jobs)
 npx inngest-cli@latest dev
 ```
 
@@ -233,23 +161,9 @@ npx inngest-cli@latest dev
 
 ---
 
-## 🔑 Key Technical Highlights
-
-- **Server Actions** — All data mutations use Next.js Server Actions for type-safe, zero-API server-side logic
-- **Prisma Transactions** — Atomic database operations ensure data consistency across account balance updates
-- **Event-Driven Architecture** — Inngest handles 3 separate cron jobs with throttling and batched processing
-- **Middleware Chaining** — ArcJet security runs before Clerk auth in a composable middleware pipeline
-- **AI Vision API** — Gemini multimodal capabilities process receipt images directly from file uploads
-- **React Email** — Type-safe, responsive email templates for budget alerts and monthly reports
-
----
-
 ## 📄 License
+This project is open-source and available under the [MIT License](LICENSE).
 
-This project is open source and available under the [MIT License](LICENSE).
-
----
-
-<p align="center">
-  Built by <a href="https://github.com/Aditya04567"><strong>Aditya</strong></a>
-</p>
+<div align="center">
+  <b>Architected and developed by <a href="https://github.com/Aditya04567">Aditya</a></b>
+</div>
