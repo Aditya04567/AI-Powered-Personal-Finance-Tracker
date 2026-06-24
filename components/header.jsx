@@ -1,13 +1,20 @@
+"use client";
+
 import React from "react";
 import { Button } from "./ui/button";
 import { PenBox, LayoutDashboard, ChevronDown } from "lucide-react";
 import Link from "next/link";
 import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
-import { checkUser } from "@/lib/checkUser";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 
-const Header = async () => {
-  await checkUser();
+const Header = () => {
+  const pathname = usePathname();
+
+  // Hide header on dashboard routes
+  if (pathname.startsWith("/dashboard") || pathname.startsWith("/account") || pathname.startsWith("/transaction")) {
+    return null;
+  }
 
   return (
     <header className="fixed top-0 w-full bg-white/90 backdrop-blur-md z-50 border-b border-slate-100">
