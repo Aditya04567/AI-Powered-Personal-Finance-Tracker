@@ -16,6 +16,7 @@
   </p>
 </div>
 
+---
 
 ## 📸 Screenshots
 
@@ -157,10 +158,6 @@ npm run dev
 # Terminal 2: Inngest (for testing background jobs)
 npx inngest-cli@latest dev
 ```
-
----
-
-
 
 ---
 
