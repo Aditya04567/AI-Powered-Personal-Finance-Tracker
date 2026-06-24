@@ -1,96 +1,60 @@
 "use client";
 
-import { ArrowUpRight, ArrowDownRight, CreditCard } from "lucide-react";
-import { Switch } from "@/components/ui/switch";
-import { Badge } from "@/components/ui/badge";
-import { useEffect } from "react";
-import useFetch from "@/hooks/use-fetch";
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { CreditCard, Landmark, Wallet, Layers } from "lucide-react";
 import Link from "next/link";
-import { updateDefaultAccount } from "@/actions/account";
-import { toast } from "sonner";
 
-export function AccountCard({ account }) {
+export function AccountCard({ account, index = 0 }) {
   const { name, type, balance, id, isDefault } = account;
 
-  const {
-    loading: updateDefaultLoading,
-    fn: updateDefaultFn,
-    data: updatedAccount,
-    error,
-  } = useFetch(updateDefaultAccount);
-
-  const handleDefaultChange = async (event) => {
-    event.preventDefault(); // Prevent navigation
-
-    if (isDefault) {
-      toast.warning("You need atleast 1 default account");
-      return; // Don't allow toggling off the default account
+  const colorSchemes = [
+    {
+      bg: "bg-[#faf8ff]",
+      iconBg: "bg-white",
+      iconColor: "text-blue-600",
+      icon: Landmark
+    },
+    {
+      bg: "bg-[#f0fdf4]",
+      iconBg: "bg-white",
+      iconColor: "text-red-600",
+      icon: Layers
+    },
+    {
+      bg: "bg-[#fffdf5]",
+      iconBg: "bg-white",
+      iconColor: "text-amber-500",
+      icon: Wallet
+    },
+    {
+      bg: "bg-[#f0f9ff]",
+      iconBg: "bg-white",
+      iconColor: "text-sky-600",
+      icon: CreditCard
     }
+  ];
 
-    await updateDefaultFn(id);
-  };
-
-  useEffect(() => {
-    if (updatedAccount?.success) {
-      toast.success("Default account updated successfully");
-    }
-  }, [updatedAccount]);
-
-  useEffect(() => {
-    if (error) {
-      toast.error(error.message || "Failed to update default account");
-    }
-  }, [error]);
+  const scheme = colorSchemes[index % colorSchemes.length];
+  const Icon = scheme.icon;
 
   return (
-    <Link href={`/account/${id}`}>
-      <div className="bg-white rounded-[1.5rem] p-6 shadow-sm border border-slate-100 hover:shadow-md hover:border-[#6b46c1] transition-all group font-sans h-full flex flex-col relative overflow-hidden">
-        <div className="flex justify-between items-start mb-6">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center">
-              <CreditCard className="w-5 h-5" />
-            </div>
-            <div>
-              <h3 className="text-sm font-bold text-slate-900 capitalize">{name}</h3>
-              <span className="inline-flex items-center px-2 py-0.5 mt-1 rounded text-[10px] font-bold bg-blue-50 text-blue-600 uppercase tracking-wider">
-                {type}
+    <Link href={`/account/${id}`} className="shrink-0 block">
+      <div className={`w-[260px] h-[100px] ${scheme.bg} rounded-2xl p-4 flex items-center gap-4 transition-transform hover:scale-[1.02] border border-slate-50/50`}>
+        <div className={`w-12 h-12 rounded-2xl ${scheme.iconBg} ${scheme.iconColor} shadow-sm flex items-center justify-center shrink-0`}>
+          <Icon className="w-6 h-6" />
+        </div>
+        
+        <div className="flex-1 min-w-0">
+          <div className="flex items-center justify-between mb-1">
+            <h3 className="text-xs font-bold text-slate-900 truncate pr-2">{name}</h3>
+            {isDefault && (
+              <span className="text-[8px] font-bold bg-purple-100 text-[#6b46c1] px-1.5 py-0.5 rounded uppercase tracking-wide">
+                Default
               </span>
-            </div>
+            )}
           </div>
-          <div className="flex flex-col items-end gap-1">
-            {isDefault && <span className="text-[10px] font-bold text-[#6b46c1]">Default</span>}
-            <div onClick={handleDefaultChange}>
-              <Switch
-                checked={isDefault}
-                disabled={updateDefaultLoading}
-                className="data-[state=checked]:bg-[#6b46c1]"
-              />
-            </div>
-          </div>
-        </div>
-
-        <div className="mb-6 flex-1">
-          <p className="text-xs font-semibold text-slate-500 mb-1">Balance</p>
-          <div className="text-2xl font-bold text-slate-900">
+          <p className="text-[10px] font-semibold text-slate-400 capitalize mb-1 truncate">{type} Account</p>
+          <div className="text-sm font-black text-slate-900">
             ${parseFloat(balance).toLocaleString("en-US", { minimumFractionDigits: 2 })}
-          </div>
-        </div>
-
-        <div className="flex justify-between items-center text-xs font-bold pt-4 border-t border-slate-50 mt-auto">
-          <div className="flex items-center text-emerald-600 hover:text-emerald-700 transition-colors">
-            <ArrowUpRight className="mr-1 h-3.5 w-3.5" />
-            Income
-          </div>
-          <div className="flex items-center text-red-600 hover:text-red-700 transition-colors">
-            <ArrowDownRight className="mr-1 h-3.5 w-3.5" />
-            Expense
           </div>
         </div>
       </div>
