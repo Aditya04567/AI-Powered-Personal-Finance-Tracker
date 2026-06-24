@@ -27,7 +27,6 @@ export function Sidebar({ isCollapsed, setIsCollapsed }) {
     { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
     { name: "Transactions", href: "/transactions", icon: ReceiptText },
     { name: "Accounts", href: "/account", icon: WalletCards }, 
-    { name: "Budgets", href: "/budgets", icon: PieChart },
     { name: "Reports", href: "/reports", icon: BarChart3 },
     { name: "AI Assistant", href: "/ai-assistant", icon: Bot },
     { name: "Goals", href: "/goals", icon: Target },

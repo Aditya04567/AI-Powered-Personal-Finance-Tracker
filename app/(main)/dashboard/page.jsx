@@ -1,6 +1,5 @@
 import { Suspense } from "react";
 import { getUserAccounts, getDashboardData } from "@/actions/dashboard";
-import { getCurrentBudget } from "@/actions/budget";
 import { Goals } from "./_components/goals";
 import { StatsCards } from "./_components/stats-cards";
 import { SpendingOverview } from "./_components/spending-overview";
@@ -21,11 +20,6 @@ export default async function DashboardPage() {
 
   const defaultAccount = accounts?.find((account) => account.isDefault) || accounts?.[0];
   const user = await currentUser();
-
-  let budgetData = null;
-  if (defaultAccount) {
-    budgetData = await getCurrentBudget(defaultAccount.id);
-  }
 
   const greeting = "Good evening";
 

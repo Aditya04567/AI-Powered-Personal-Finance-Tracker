@@ -16,7 +16,7 @@ model User {
   imageUrl      String?
   transactions  Transaction[]
   accounts      Account[]
-  budgets       Budget[]
+  goals         Goal[]
   createdAt     DateTime      @default(now())
   updatedAt     DateTime      @updatedAt
 
@@ -65,17 +65,19 @@ model Transaction {
 }
 
 
-model Budget {
+model Goal {
   id          String       @id @default(uuid())
-  amount      Decimal
-  lastAlertSent DateTime?  // Track when the last alert was sent
-  userId      String       @unique
+  name        String
+  targetAmount Decimal
+  currentAmount Decimal    @default(0)
+  isCompleted Boolean      @default(false)
+  userId      String
   user        User         @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt   DateTime     @default(now())
   updatedAt   DateTime     @updatedAt
 
   @@index([userId])
-  @@map("budgets")
+  @@map("goals")
 }
 
 enum TransactionType {
