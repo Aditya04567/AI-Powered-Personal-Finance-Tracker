@@ -109,16 +109,16 @@ export function BudgetProgress({ initialBudget, currentExpenses }) {
 
       {initialBudget ? (
         <>
-          <div className="grid grid-cols-3 gap-4 mb-4">
-            <div>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-4">
+            <div className="bg-slate-50 sm:bg-transparent p-3 sm:p-0 rounded-xl sm:rounded-none">
               <p className="text-xs font-semibold text-slate-500 mb-1">Spent</p>
               <p className="text-lg font-bold text-slate-900">${currentExpenses.toLocaleString("en-US", { minimumFractionDigits: 2 })}</p>
             </div>
-            <div>
+            <div className="bg-slate-50 sm:bg-transparent p-3 sm:p-0 rounded-xl sm:rounded-none">
               <p className="text-xs font-semibold text-slate-500 mb-1">Budget</p>
               <p className="text-lg font-bold text-slate-900">${initialBudget.amount.toLocaleString("en-US", { minimumFractionDigits: 2 })}</p>
             </div>
-            <div>
+            <div className="bg-slate-50 sm:bg-transparent p-3 sm:p-0 rounded-xl sm:rounded-none">
               <p className="text-xs font-semibold text-slate-500 mb-1">Remaining</p>
               <p className="text-lg font-bold text-emerald-600">${remaining.toLocaleString("en-US", { minimumFractionDigits: 2 })}</p>
             </div>

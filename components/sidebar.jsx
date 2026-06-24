@@ -10,11 +10,11 @@ import {
   WalletCards, 
   PieChart, 
   BarChart3, 
-  TrendingUp, 
   Target, 
   Settings,
   Sparkles,
-  ChevronRight
+  ChevronRight,
+  Bot
 } from "lucide-react";
 
 export function Sidebar() {
@@ -27,7 +27,7 @@ export function Sidebar() {
     { name: "Accounts", href: "/account", icon: WalletCards }, // Currently routes to dynamic /account/[id] but maybe just /account is fine for dummy
     { name: "Budgets", href: "/budgets", icon: PieChart },
     { name: "Reports", href: "/reports", icon: BarChart3 },
-    { name: "Investments", href: "/investments", icon: TrendingUp },
+    { name: "AI Assistant", href: "/ai-assistant", icon: Bot },
     { name: "Goals", href: "/goals", icon: Target },
     { name: "Settings", href: "/settings", icon: Settings },
   ];
@@ -48,14 +48,14 @@ export function Sidebar() {
       </div>
 
       {/* Navigation */}
-      <nav className="flex-1 px-4 space-y-1.5 overflow-y-auto">
+      <nav className="flex-1 px-4 py-6 space-y-2 overflow-y-auto custom-scrollbar">
         {navItems.map((item) => {
           const isActive = pathname === item.href || pathname.startsWith(`${item.href}/`);
           return (
             <Link
               key={item.name}
               href={item.href}
-              className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-colors ${
+              className={`flex items-center gap-3 px-4 py-3.5 rounded-xl text-sm font-semibold transition-colors ${
                 isActive
                   ? "bg-[#f4f2ff] text-[#6b46c1]" // Purple highlight matching image
                   : "text-slate-500 hover:bg-slate-50 hover:text-slate-900"
