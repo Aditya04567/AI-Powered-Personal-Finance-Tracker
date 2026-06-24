@@ -229,7 +229,7 @@ npx inngest-cli@latest dev
 
 ## 📸 Screenshots
 
-<img width="1470" alt="Spendly Dashboard" src="https://github.com/user-attachments/assets/1bc50b85-b421-4122-8ba4-ae68b2b61432">
+<img width="1350" height="632" alt="image" src="https://github.com/user-attachments/assets/a63c2086-77ed-4b54-b458-d1c9ff12a0d8" />
 
 ---
 
