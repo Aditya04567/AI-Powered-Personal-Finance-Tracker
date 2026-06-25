@@ -29,3 +29,9 @@ export const transactionSchema = z
       });
     }
   });
+
+export const goalSchema = z.object({
+  name: z.string().min(1, "Goal name is required"),
+  targetAmount: z.string().min(1, "Target amount is required"),
+  currentAmount: z.string().optional(),
+});

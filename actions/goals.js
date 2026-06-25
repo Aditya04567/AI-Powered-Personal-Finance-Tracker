@@ -4,6 +4,17 @@ import { db } from "@/lib/prisma";
 import { auth } from "@clerk/nextjs/server";
 import { revalidatePath } from "next/cache";
 
+const serializeGoal = (obj) => {
+  const serialized = { ...obj };
+  if (obj.targetAmount) {
+    serialized.targetAmount = obj.targetAmount.toNumber();
+  }
+  if (obj.currentAmount) {
+    serialized.currentAmount = obj.currentAmount.toNumber();
+  }
+  return serialized;
+};
+
 export async function getUserGoals() {
   const { userId } = await auth();
   if (!userId) throw new Error("Unauthorized");
@@ -19,7 +30,7 @@ export async function getUserGoals() {
     orderBy: { createdAt: "desc" },
   });
 
-  return goals;
+  return goals.map(serializeGoal);
 }
 
 export async function createGoal(data) {
@@ -33,17 +44,27 @@ export async function createGoal(data) {
 
     if (!user) throw new Error("User not found");
 
+    const targetAmountFloat = parseFloat(data.targetAmount);
+    if (isNaN(targetAmountFloat)) {
+      throw new Error("Invalid target amount");
+    }
+
+    const currentAmountFloat = parseFloat(data.currentAmount || "0");
+
     const goal = await db.goal.create({
       data: {
-        ...data,
+        name: data.name,
+        targetAmount: targetAmountFloat,
+        currentAmount: currentAmountFloat,
         userId: user.id,
       },
     });
 
     revalidatePath("/goals");
-    return { success: true, data: goal };
+    revalidatePath("/dashboard");
+    return { success: true, data: serializeGoal(goal) };
   } catch (error) {
-    return { success: false, error: error.message };
+    throw new Error(error.message);
   }
 }
 

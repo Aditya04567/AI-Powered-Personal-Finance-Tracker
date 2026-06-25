@@ -12,7 +12,13 @@ const Header = () => {
   const pathname = usePathname();
 
   // Hide header on dashboard routes
-  if (pathname.startsWith("/dashboard") || pathname.startsWith("/account") || pathname.startsWith("/transaction")) {
+  if (
+    pathname.startsWith("/dashboard") || 
+    pathname.startsWith("/account") || 
+    pathname.startsWith("/transaction") || 
+    pathname.startsWith("/reports") || 
+    pathname.startsWith("/goals")
+  ) {
     return null;
   }
 

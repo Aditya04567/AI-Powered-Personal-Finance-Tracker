@@ -1,28 +1,36 @@
 "use client";
 
-import { TrendingUp, AlertTriangle, Lightbulb } from "lucide-react";
+import { useState } from "react";
+import { TrendingUp, AlertTriangle, Lightbulb, Bot, Loader2 } from "lucide-react";
+import { generateFinancialInsights } from "@/actions/ai";
+import { toast } from "sonner";
+import { Button } from "@/components/ui/button";
 
-export function AIInsights() {
-  const insights = [
-    {
-      icon: TrendingUp,
-      iconBg: "bg-emerald-100",
-      iconColor: "text-emerald-600",
-      text: "You spent 15% more on Food & Dining than last month.",
-    },
-    {
-      icon: AlertTriangle,
-      iconBg: "bg-amber-100",
-      iconColor: "text-amber-500",
-      text: "Your Entertainment budget is 60% used. Plan ahead!",
-    },
-    {
-      icon: Lightbulb,
-      iconBg: "bg-purple-100",
-      iconColor: "text-[#6b46c1]",
-      text: "Great job! You saved $200 more than last month.",
-    },
+export function AIInsights({ transactions = [] }) {
+  const [insights, setInsights] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const icons = [
+    { icon: TrendingUp, bg: "bg-emerald-100", color: "text-emerald-600" },
+    { icon: AlertTriangle, bg: "bg-amber-100", color: "text-amber-500" },
+    { icon: Lightbulb, bg: "bg-purple-100", color: "text-[#6b46c1]" },
   ];
+
+  const handleGenerate = async () => {
+    setIsLoading(true);
+    try {
+      const res = await generateFinancialInsights(transactions);
+      if (res?.success) {
+        setInsights(res.data);
+      } else {
+        toast.error(res?.error || "Failed to generate insights.");
+      }
+    } catch (error) {
+      toast.error(error.message || "Something went wrong.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <div className="bg-white rounded-[2rem] p-5 sm:p-6 shadow-sm border border-slate-100 h-full flex flex-col">
@@ -32,23 +40,57 @@ export function AIInsights() {
       </div>
 
       <div className="space-y-4 flex-1">
-        {insights.map((insight, index) => (
-          <div key={index} className="flex items-start gap-3">
-            <div className={`w-8 h-8 rounded-full ${insight.iconBg} ${insight.iconColor} flex items-center justify-center shrink-0`}>
-              <insight.icon className="w-4 h-4" />
+        {insights.length === 0 ? (
+          <div className="flex flex-col items-center justify-center h-full text-center py-4">
+            <div className="w-12 h-12 rounded-full bg-slate-50 flex items-center justify-center mb-3">
+              <Bot className="w-6 h-6 text-slate-400" />
             </div>
-            <p className="text-sm font-semibold text-slate-700 leading-relaxed mt-0.5">
-              {insight.text}
+            <p className="text-[13px] font-semibold text-slate-500 mb-4 max-w-[200px]">
+              Generate real-time AI insights based on your spending habits.
             </p>
+            <Button 
+              onClick={handleGenerate} 
+              disabled={isLoading || transactions.length === 0}
+              className="bg-[#6b46c1] hover:bg-[#553c9a] text-white rounded-xl px-4 h-9 text-xs font-semibold shadow-sm w-full"
+            >
+              {isLoading ? (
+                <><Loader2 className="w-3.5 h-3.5 mr-1.5 animate-spin" /> Analyzing...</>
+              ) : (
+                <><SparklesIcon className="w-3.5 h-3.5 mr-1.5" /> Generate Insights</>
+              )}
+            </Button>
+            {transactions.length === 0 && !isLoading && (
+              <p className="text-[10px] text-slate-400 mt-2">Add transactions to get insights.</p>
+            )}
           </div>
-        ))}
+        ) : (
+          insights.map((insight, index) => {
+            const style = icons[index % icons.length];
+            return (
+              <div key={index} className="flex items-start gap-3">
+                <div className={`w-8 h-8 rounded-full ${style.bg} ${style.color} flex items-center justify-center shrink-0`}>
+                  <style.icon className="w-4 h-4" />
+                </div>
+                <p className="text-sm font-semibold text-slate-700 leading-relaxed mt-0.5">
+                  {insight}
+                </p>
+              </div>
+            );
+          })
+        )}
       </div>
 
-      <div className="mt-5">
-        <button className="text-xs font-bold text-[#6b46c1] hover:text-[#553c9a] transition-colors inline-flex items-center gap-1">
-          View All Insights <span>→</span>
-        </button>
-      </div>
+      {insights.length > 0 && (
+        <div className="mt-5">
+          <button 
+            onClick={handleGenerate}
+            disabled={isLoading}
+            className="text-xs font-bold text-[#6b46c1] hover:text-[#553c9a] transition-colors inline-flex items-center gap-1 disabled:opacity-50"
+          >
+            {isLoading ? "Refreshing..." : "Refresh Insights"} <SparklesIcon className="w-3.5 h-3.5 ml-0.5" />
+          </button>
+        </div>
+      )}
     </div>
   );
 }

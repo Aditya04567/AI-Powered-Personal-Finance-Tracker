@@ -33,7 +33,9 @@ export function AccountCard({ account, index = 0 }) {
     }
   ];
 
-  const scheme = colorSchemes[index % colorSchemes.length];
+  // Use a stable hash of the account ID so the color doesn't change when order changes
+  const hash = (id || "").split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+  const scheme = colorSchemes[hash % colorSchemes.length];
   const Icon = scheme.icon;
 
   return (

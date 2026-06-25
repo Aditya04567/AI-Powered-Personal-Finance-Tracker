@@ -19,13 +19,13 @@ export function SpendingBreakdown({ transactions = [] }) {
   // Assign styles based on category
   const getCategoryStyles = (category) => {
     switch(category?.toLowerCase()) {
-      case "housing": return { color: "#6b46c1", icon: Home, iconBg: "bg-purple-100", iconColor: "text-[#6b46c1]" };
-      case "food & dining": return { color: "#10b981", icon: Utensils, iconBg: "bg-emerald-100", iconColor: "text-emerald-600" };
-      case "transport": return { color: "#3b82f6", icon: Car, iconBg: "bg-blue-100", iconColor: "text-blue-600" };
-      case "shopping": return { color: "#eab308", icon: ShoppingBag, iconBg: "bg-amber-100", iconColor: "text-amber-500" };
-      case "entertainment": return { color: "#a855f7", icon: Tv, iconBg: "bg-purple-100", iconColor: "text-[#6b46c1]" };
-      case "utilities": return { color: "#d946ef", icon: Zap, iconBg: "bg-fuchsia-100", iconColor: "text-fuchsia-500" };
-      default: return { color: "#94a3b8", icon: LayoutGrid, iconBg: "bg-slate-100", iconColor: "text-slate-500" };
+      case "housing": return { color: "#6366f1", icon: Home, iconBg: "bg-indigo-100", iconColor: "text-indigo-600" }; // Indigo
+      case "food & dining": return { color: "#f43f5e", icon: Utensils, iconBg: "bg-rose-100", iconColor: "text-rose-600" }; // Rose
+      case "transport": return { color: "#f59e0b", icon: Car, iconBg: "bg-amber-100", iconColor: "text-amber-500" }; // Amber
+      case "shopping": return { color: "#ec4899", icon: ShoppingBag, iconBg: "bg-pink-100", iconColor: "text-pink-500" }; // Pink
+      case "entertainment": return { color: "#8b5cf6", icon: Tv, iconBg: "bg-violet-100", iconColor: "text-violet-600" }; // Violet
+      case "utilities": return { color: "#14b8a6", icon: Zap, iconBg: "bg-teal-100", iconColor: "text-teal-500" }; // Teal
+      default: return { color: "#0ea5e9", icon: LayoutGrid, iconBg: "bg-sky-100", iconColor: "text-sky-500" }; // Sky Blue
     }
   };
 
@@ -42,10 +42,6 @@ export function SpendingBreakdown({ transactions = [] }) {
     <div className="bg-white rounded-[2rem] p-6 shadow-sm border border-slate-100 flex flex-col h-full relative">
       <div className="flex items-center justify-between mb-8">
         <h2 className="text-[15px] font-bold text-slate-900 tracking-tight">Spending Breakdown</h2>
-        <select className="text-[10px] font-semibold bg-slate-50 border border-slate-100 text-slate-600 rounded-lg px-2 py-1.5 outline-none cursor-pointer appearance-none pr-6 relative">
-          <option>This Month</option>
-          <option>Last Month</option>
-        </select>
       </div>
 
       <div className="flex flex-col 2xl:flex-row items-center justify-center gap-6 flex-1 mb-14">
@@ -58,9 +54,9 @@ export function SpendingBreakdown({ transactions = [] }) {
                 data={data}
                 cx="50%"
                 cy="50%"
-                innerRadius={55}
+                innerRadius={50}
                 outerRadius={80}
-                paddingAngle={2}
+                paddingAngle={3}
                 dataKey="value"
                 stroke="none"
               >

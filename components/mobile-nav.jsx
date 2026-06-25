@@ -31,9 +31,7 @@ export function MobileNav() {
     { name: "Transactions", href: "/transactions", icon: ReceiptText },
     { name: "Accounts", href: "/account", icon: WalletCards },
     { name: "Reports", href: "/reports", icon: BarChart3 },
-    { name: "AI Assistant", href: "/ai-assistant", icon: Bot },
     { name: "Goals", href: "/goals", icon: Target },
-    { name: "Settings", href: "/settings", icon: Settings },
   ];
 
   return (

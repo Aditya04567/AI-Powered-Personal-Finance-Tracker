@@ -59,14 +59,14 @@ export function AccountOverview({ accounts = [] }) {
         {stats.map((stat, i) => (
           <div 
             key={i} 
-            className="flex flex-col p-4 rounded-2xl border border-slate-50 hover:bg-slate-50 transition-colors group cursor-pointer"
+            className="flex flex-col p-4 rounded-2xl border border-slate-50 hover:bg-slate-50 transition-colors group cursor-pointer min-w-0"
           >
             <div className={`w-10 h-10 rounded-xl flex items-center justify-center mb-4 transition-transform group-hover:scale-110 ${stat.iconBg} ${stat.iconColor}`}>
               <stat.icon className="w-5 h-5" />
             </div>
             
             <p className="text-[11px] font-bold text-slate-500 mb-1">{stat.title}</p>
-            <h3 className="text-xl font-black text-slate-900 tracking-tight mb-2">
+            <h3 className="text-lg lg:text-xl font-black text-slate-900 tracking-tight mb-2 truncate" title={`$${stat.amount.toLocaleString("en-US", { minimumFractionDigits: 2 })}`}>
               ${stat.amount.toLocaleString("en-US", { minimumFractionDigits: 2 })}
             </h3>
             

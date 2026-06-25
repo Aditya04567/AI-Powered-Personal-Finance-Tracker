@@ -1,21 +1,20 @@
-import { Suspense } from "react";
 import { getUserAccounts, getDashboardData } from "@/actions/dashboard";
+import { getUserGoals } from "@/actions/goals";
 import { Goals } from "./_components/goals";
 import { StatsCards } from "./_components/stats-cards";
-import { SpendingOverview } from "./_components/spending-overview";
 import { RecentTransactions } from "./_components/recent-transactions";
 import { AIInsights } from "./_components/ai-insights";
-import { CashFlow } from "./_components/cash-flow";
 import { AccountCarousel } from "./_components/account-carousel";
-import { Plus, Bell, Search, Command } from "lucide-react";
+import { Plus } from "lucide-react";
 import { currentUser } from "@clerk/nextjs/server";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 
 export default async function DashboardPage() {
-  const [accounts, transactions] = await Promise.all([
+  const [accounts, transactions, goals] = await Promise.all([
     getUserAccounts(),
     getDashboardData(),
+    getUserGoals(),
   ]);
 
   const defaultAccount = accounts?.find((account) => account.isDefault) || accounts?.[0];
@@ -37,25 +36,7 @@ export default async function DashboardPage() {
         </div>
         
         <div className="flex flex-wrap items-center gap-3">
-          {/* Mock Search Bar */}
-          <div className="relative flex-1 sm:flex-none sm:min-w-[240px]">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
-            <input 
-              type="text" 
-              placeholder="Search anything..." 
-              className="w-full h-9 pl-9 pr-12 rounded-xl border border-slate-200 bg-white text-xs focus:outline-none focus:ring-2 focus:ring-purple-500/20 transition-all shadow-sm placeholder:text-slate-400"
-            />
-            <div className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center gap-0.5 bg-slate-100 px-1.5 py-0.5 rounded text-[10px] font-bold text-slate-500">
-              <Command className="w-3 h-3" />
-              <span>K</span>
-            </div>
-          </div>
-
           <div className="flex items-center gap-2">
-            <button className="relative w-9 h-9 bg-white border border-slate-200 rounded-xl flex items-center justify-center text-slate-600 hover:bg-slate-50 transition-colors shadow-sm shrink-0">
-              <Bell className="w-4 h-4" />
-              <span className="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full border-2 border-white"></span>
-            </button>
             <Link href="/transaction/create">
               <Button className="bg-[#6b46c1] hover:bg-[#553c9a] text-white rounded-xl px-4 h-9 text-xs font-semibold shadow-sm w-full sm:w-auto">
                 <Plus className="w-4 h-4 mr-1.5" />
@@ -72,21 +53,11 @@ export default async function DashboardPage() {
       {/* Row 1: Stats Cards */}
       <StatsCards accounts={accounts || []} transactions={transactions || []} />
 
-      {/* Row 2: Spending Overview & Cash Flow */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-        <div className="lg:col-span-2">
-          <SpendingOverview transactions={transactions || []} />
-        </div>
-        <div className="lg:col-span-1">
-          <CashFlow transactions={transactions || []} />
-        </div>
-      </div>
-
-      {/* Row 3: Recent Transactions, AI Insights, Goals */}
+      {/* Row 2: Recent Transactions, AI Insights, Goals */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
         <RecentTransactions transactions={transactions || []} />
-        <AIInsights />
-        <Goals />
+        <AIInsights transactions={transactions || []} />
+        <Goals goals={goals || []} />
       </div>
 
       {/* Row 4: Your Accounts */}

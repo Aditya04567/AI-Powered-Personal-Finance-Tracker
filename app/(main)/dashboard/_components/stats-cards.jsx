@@ -13,6 +13,12 @@ export function StatsCards({ accounts, transactions }) {
     return d.getMonth() === currentDate.getMonth() && d.getFullYear() === currentDate.getFullYear();
   });
 
+  const lastMonthTransactions = transactions.filter((t) => {
+    const d = new Date(t.date);
+    const lastMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 1);
+    return d.getMonth() === lastMonth.getMonth() && d.getFullYear() === lastMonth.getFullYear();
+  });
+
   const monthlyIncome = currentMonthTransactions
     .filter((t) => t.type === "INCOME")
     .reduce((sum, t) => sum + Number(t.amount), 0);
@@ -22,6 +28,30 @@ export function StatsCards({ accounts, transactions }) {
     .reduce((sum, t) => sum + Number(t.amount), 0);
 
   const monthlySavings = monthlyIncome - monthlyExpenses;
+
+  const lastMonthIncome = lastMonthTransactions
+    .filter((t) => t.type === "INCOME")
+    .reduce((sum, t) => sum + Number(t.amount), 0);
+
+  const lastMonthExpenses = lastMonthTransactions
+    .filter((t) => t.type === "EXPENSE")
+    .reduce((sum, t) => sum + Number(t.amount), 0);
+
+  const lastMonthSavings = lastMonthIncome - lastMonthExpenses;
+
+  // Helper to format percentage change
+  const formatChange = (current, previous) => {
+    if (previous === 0) return current > 0 ? "+100%" : "0%";
+    const change = ((current - previous) / previous) * 100;
+    return `${change > 0 ? "+" : ""}${change.toFixed(1)}%`;
+  };
+
+  const incomeChange = formatChange(monthlyIncome, lastMonthIncome);
+  const expenseChange = formatChange(monthlyExpenses, lastMonthExpenses);
+  const savingsChange = formatChange(monthlySavings, lastMonthSavings);
+  
+  // Total balance doesn't have "last month" easily unless we track history, so let's mock it lightly or derive it.
+  const balanceChange = formatChange(totalBalance, totalBalance - monthlySavings);
 
   return (
     <div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-4 mb-6">
@@ -37,7 +67,7 @@ export function StatsCards({ accounts, transactions }) {
           ${totalBalance.toLocaleString("en-US", { minimumFractionDigits: 2 })}
         </h2>
         <div className="flex items-end justify-between mt-auto z-10">
-          <p className="text-[10px] font-bold text-emerald-500">+6.5% <span className="text-slate-400 font-semibold">from last month</span></p>
+          <p className={`text-[10px] font-bold ${balanceChange.startsWith("+") ? "text-emerald-500" : "text-red-500"}`}>{balanceChange} <span className="text-slate-400 font-semibold">from last month</span></p>
           
           <div className="w-20 h-8 opacity-90">
             <svg viewBox="0 0 100 40" className="w-full h-full overflow-visible">
@@ -59,7 +89,7 @@ export function StatsCards({ accounts, transactions }) {
           ${monthlyIncome.toLocaleString("en-US", { minimumFractionDigits: 2 })}
         </h2>
         <div className="flex items-end justify-between mt-auto z-10">
-          <p className="text-[10px] font-bold text-emerald-500">+12% <span className="text-slate-400 font-semibold">from last month</span></p>
+          <p className={`text-[10px] font-bold ${incomeChange.startsWith("+") ? "text-emerald-500" : "text-red-500"}`}>{incomeChange} <span className="text-slate-400 font-semibold">from last month</span></p>
           
           <div className="w-20 h-8 opacity-90">
             <svg viewBox="0 0 100 40" className="w-full h-full overflow-visible">
@@ -81,7 +111,7 @@ export function StatsCards({ accounts, transactions }) {
           ${monthlyExpenses.toLocaleString("en-US", { minimumFractionDigits: 2 })}
         </h2>
         <div className="flex items-end justify-between mt-auto z-10">
-          <p className="text-[10px] font-bold text-red-500">-5% <span className="text-slate-400 font-semibold">from last month</span></p>
+          <p className={`text-[10px] font-bold ${expenseChange.startsWith("+") ? "text-red-500" : "text-emerald-500"}`}>{expenseChange} <span className="text-slate-400 font-semibold">from last month</span></p>
           
           <div className="w-20 h-8 opacity-90">
             <svg viewBox="0 0 100 40" className="w-full h-full overflow-visible">
@@ -103,7 +133,7 @@ export function StatsCards({ accounts, transactions }) {
           ${Math.max(monthlySavings, 0).toLocaleString("en-US", { minimumFractionDigits: 2 })}
         </h2>
         <div className="flex items-end justify-between mt-auto z-10">
-          <p className="text-[10px] font-bold text-emerald-500">+18% <span className="text-slate-400 font-semibold">from last month</span></p>
+          <p className={`text-[10px] font-bold ${savingsChange.startsWith("+") ? "text-emerald-500" : "text-red-500"}`}>{savingsChange} <span className="text-slate-400 font-semibold">from last month</span></p>
           
           <div className="w-20 h-8 opacity-90">
             <svg viewBox="0 0 100 40" className="w-full h-full overflow-visible">

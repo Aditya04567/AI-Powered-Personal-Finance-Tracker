@@ -8,8 +8,14 @@ import { usePathname } from "next/navigation";
 export default function Footer() {
   const pathname = usePathname();
 
-  // Hide footer on dashboard routes
-  if (pathname.startsWith("/dashboard") || pathname.startsWith("/account") || pathname.startsWith("/transaction")) {
+  // Hide footer on all app routes
+  if (
+    pathname.startsWith("/dashboard") || 
+    pathname.startsWith("/account") || 
+    pathname.startsWith("/transaction") ||
+    pathname.startsWith("/reports") ||
+    pathname.startsWith("/goals")
+  ) {
     return null;
   }
 

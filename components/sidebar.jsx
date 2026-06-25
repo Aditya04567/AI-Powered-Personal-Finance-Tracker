@@ -28,9 +28,7 @@ export function Sidebar({ isCollapsed, setIsCollapsed }) {
     { name: "Transactions", href: "/transactions", icon: ReceiptText },
     { name: "Accounts", href: "/account", icon: WalletCards }, 
     { name: "Reports", href: "/reports", icon: BarChart3 },
-    { name: "AI Assistant", href: "/ai-assistant", icon: Bot },
     { name: "Goals", href: "/goals", icon: Target },
-    { name: "Settings", href: "/settings", icon: Settings },
   ];
 
   return (
@@ -86,22 +84,6 @@ export function Sidebar({ isCollapsed, setIsCollapsed }) {
 
       {/* Bottom Section */}
       <div className={`p-4 mt-auto border-t border-slate-50 ${isCollapsed ? "flex flex-col items-center" : ""}`}>
-        {/* Upgrade Card */}
-        {!isCollapsed && (
-          <div className="bg-[#f9fafb] rounded-2xl p-5 mb-4">
-            <div className="w-8 h-8 rounded-full bg-purple-100 flex items-center justify-center text-purple-600 mb-3">
-              <Sparkles className="w-4 h-4" />
-            </div>
-            <h4 className="text-sm font-bold text-slate-900 mb-1">Upgrade to Pro</h4>
-            <p className="text-xs text-slate-500 font-medium mb-4 leading-relaxed">
-              Unlock advanced insights and smart features.
-            </p>
-            <button className="bg-white border border-slate-200 text-slate-900 text-xs font-bold py-2.5 px-4 rounded-xl w-full flex items-center justify-center gap-2 hover:bg-slate-50 transition-colors shadow-sm">
-              Upgrade Now <ChevronRight className="w-3 h-3" />
-            </button>
-          </div>
-        )}
-
         {/* User Profile */}
         {user && (
           <div 

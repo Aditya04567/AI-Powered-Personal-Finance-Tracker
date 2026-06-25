@@ -121,21 +121,6 @@ export function GoalsList({ goals = [] }) {
           </div>
         ))}
 
-        {/* Add New Goal Button */}
-        <Link href="/goals/create">
-          <div className="flex items-center gap-4 p-5 rounded-2xl border-2 border-dashed border-slate-200 hover:border-purple-300 hover:bg-purple-50/30 transition-all cursor-pointer group mt-8">
-            <div className="w-12 h-12 rounded-full bg-purple-50 text-[#6b46c1] flex items-center justify-center shrink-0 group-hover:bg-purple-100 transition-colors">
-              <Plus className="w-5 h-5" />
-            </div>
-            <div>
-              <h3 className="text-[13px] font-bold text-slate-900 mb-0.5">Create New Goal</h3>
-              <p className="text-[11px] font-semibold text-slate-500">Start saving for something important</p>
-            </div>
-            <div className="ml-auto text-slate-400 group-hover:text-[#6b46c1] transition-colors">
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path></svg>
-            </div>
-          </div>
-        </Link>
       </div>
     </div>
   );
