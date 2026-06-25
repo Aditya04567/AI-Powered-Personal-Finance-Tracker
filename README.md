@@ -1,72 +1,84 @@
 <div align="center">
+  <h3><strong>Final Year Major Project Report</strong></h3>
+  <h1>Spendly: An Intelligent Personal Finance Platform</h1>
+  
+  <p><strong>Submitted in partial fulfillment of the requirements for the degree of</strong></p>
+  <p><strong>Bachelor of Technology (B.Tech)</strong></p>
+
+  <br />
+
+  <p><strong>Submitted By:</strong></p>
+  <p><a href="https://github.com/Aditya04567"><strong>Aditya</strong></a></p>
+
+  <br />
+
+  <p><strong>Under the Guidance of:</strong></p>
+  <p><strong>[Supervisor / Professor Name]</strong></p>
+  <p>[Department Name]</p>
+  <p>[University / College Name]</p>
+
+  <br />
+  
   <img src="public/logo.png" alt="Spendly Logo" width="100" />
-
-  <h1>Spendly | Intelligent Personal Finance Platform</h1>
-
-  <p>
-    A production-ready, full-stack financial management platform leveraging <strong>Next.js 15</strong>, <strong>Google Gemini AI</strong>, and <strong>Supabase</strong> to automate expense tracking and deliver actionable financial intelligence.
-  </p>
-
-  <p>
-    <a href="#features">Features</a> •
-    <a href="#tech-stack">Tech Stack</a> •
-    <a href="#system-architecture">Architecture</a> •
-    <a href="#technical-highlights">Technical Highlights</a> •
-    <a href="#getting-started">Getting Started</a>
-  </p>
 </div>
 
 ---
 
-## 📸 Screenshots
+## 1. Abstract
 
-<img width="1350" height="632" alt="image" src="https://github.com/user-attachments/assets/a63c2086-77ed-4b54-b458-d1c9ff12a0d8" />
-
----
-
-## 💡 The Vision
-
-Managing personal finances often involves manual data entry, disconnected spreadsheets, and reactive budgeting. **Spendly** solves this by automating the tedious parts of financial tracking—utilizing AI to parse receipts, automatically categorizing transactions, and utilizing background jobs to manage recurring expenses and real-time budget alerts. 
-
-## ✨ Key Features
-
-### 🤖 AI-Driven Automation
-* **Computer Vision Receipt Parsing:** Integrated **Google Gemini 3.5 Flash** to analyze receipt images, automatically extracting metadata (merchant, amount, date) and intelligently categorizing the expense.
-* **Algorithmic Insights:** Generates personalized monthly financial reports, analyzing spending velocity and category distributions.
-
-### 💰 Core Financial Engine
-* **Multi-Account Architecture:** Support for isolated tracking across multiple bank accounts (Checking, Savings, Credit).
-* **Automated Recurring Transactions:** CRON-driven engine that processes scheduled daily, weekly, or monthly payments with built-in idempotency to prevent duplicate charges.
-* **Proactive Budget Constraints:** Real-time budget monitoring with automated email thresholds triggered when spending exceeds 80%.
-
-### 🎨 Premium User Experience (UX/UI)
-* **Monarch-Inspired Aesthetics:** A modern, glassmorphic landing page and dashboard featuring smooth micro-interactions, responsive CSS grids, and accessible typography.
-* **Interactive Data Visualization:** Custom SVG and Recharts-based visualizations for cash flow, net worth progression, and category breakdown.
-
-### 🛡️ Enterprise-Grade Security
-* **Multi-Layer Authentication:** Integrated **Clerk** for secure OAuth and JWT-based session management.
-* **Edge Security:** Implemented **ArcJet** middleware for bot protection, rate limiting, and request shielding at the edge.
+Managing personal finances effectively is a common challenge for many individuals due to the fragmented nature of modern banking and the tediousness of manual budgeting. **Spendly** is a comprehensive, AI-driven personal finance management platform designed to automate and simplify this process. By leveraging computer vision and natural language processing (via Google Gemini AI), Spendly automatically parses receipts, categorizes transactions, and provides intelligent financial insights. Built on a modern tech stack (Next.js 15, PostgreSQL, and Supabase), the system ensures high scalability, real-time tracking, and proactive budget enforcement, ultimately enabling users to make informed financial decisions.
 
 ---
 
-## 🛠️ Tech Stack & Decisions
+## 2. Introduction
 
-I deliberately chose a modern, edge-compatible stack to ensure high performance, type safety, and scalability.
-
-| Category | Technologies | Justification |
-|---|---|---|
-| **Frontend Framework** | Next.js 15, React 19 (App Router) | Leveraged Server Components (RSC) and Server Actions for zero-API data fetching and enhanced SEO. |
-| **Styling & UI** | Tailwind CSS, Radix UI, shadcn/ui | Utility-first styling for rapid, highly-customizable, and accessible component design. |
-| **Database & ORM** | PostgreSQL (Supabase), Prisma ORM | Relational integrity for financial data with Prisma providing strict type-safety across the application boundary. |
-| **Background Jobs** | Inngest | Event-driven background processing for reliable execution of budget alerts and recurring transactions without serverless timeout limits. |
-| **AI Integration** | Google Gemini SDK | Multimodal capabilities used for fast and accurate optical character recognition (OCR) on receipts. |
-| **Authentication** | Clerk | Out-of-the-box identity management with robust session control and 2FA capabilities. |
+In the digital era, while digital transactions have become the norm, financial tracking remains largely reactive. Users often rely on generic banking applications that lack holistic analysis, or cumbersome spreadsheets requiring manual entry. The objective of this project is to develop an automated, centralized financial tracker that acts as a personal financial advisor. Spendly allows users to link multiple accounts, schedule recurring payments, establish dynamic budgets, and utilize artificial intelligence to derive meaning from their spending habits.
 
 ---
 
-## 🏗️ System Architecture
+## 3. Problem Statement
 
-Spendly employs a decoupled, serverless-first architecture designed for resilience and performance.
+* **Manual Data Entry:** Users spend excessive time manually entering receipt data into budgeting tools.
+* **Lack of Proactive Alerts:** Traditional apps notify users of their balance rather than warning them when approaching a budget limit.
+* **Fragmented Financial View:** Users with multiple bank accounts struggle to see a unified view of their cash flow and net worth.
+* **Categorization Errors:** Manual categorization is prone to human error, leading to inaccurate financial reporting.
+
+---
+
+## 4. Proposed Solution
+
+Spendly addresses these issues by offering:
+1. **AI Receipt Scanning:** Upload a receipt, and the system automatically extracts the merchant, date, amount, and category.
+2. **Event-Driven Automation:** Recurring transactions are managed by background cron jobs to prevent manual tracking and missed payments.
+3. **Automated Budget Alerts:** Real-time monitoring combined with email notifications when spending exceeds 80% of the allocated budget.
+4. **Comprehensive Dashboards:** Interactive, visual reporting of income vs. expenses, net savings, and category breakdowns.
+
+---
+
+## 5. Technology Stack
+
+This project utilizes a modern, serverless-first architecture to ensure performance, type safety, and scalability.
+
+### Frontend
+* **Framework:** Next.js 15 (App Router), React 19
+* **UI & Styling:** Tailwind CSS, Radix UI, shadcn/ui
+* **Data Visualization:** Recharts
+
+### Backend & Database
+* **Database:** PostgreSQL hosted on Supabase
+* **ORM:** Prisma (for strict end-to-end type safety)
+* **Background Processing:** Inngest (for reliable execution of cron jobs and budget alerts)
+
+### AI & Security
+* **Artificial Intelligence:** Google Gemini SDK (gemini-1.5-pro for NLP and gemini-1.5-flash for OCR)
+* **Authentication:** Clerk (OAuth and JWT-based session management)
+* **Edge Security:** ArcJet (Bot protection and rate limiting)
+
+---
+
+## 6. System Architecture
+
+The system operates on a decoupled architecture, ensuring that heavy background tasks (like AI processing and cron jobs) do not block the main user interface thread.
 
 ```text
 ┌─────────────────────────────────────────────────────────────┐
@@ -93,77 +105,97 @@ Spendly employs a decoupled, serverless-first architecture designed for resilien
 
 ---
 
-## 🧠 Technical Highlights & Problem Solving
+## 7. Key Modules
 
-During development, I tackled several complex engineering challenges:
+### Module 1: Account & Transaction Management
+Allows users to create distinct accounts (Checking, Savings, Credit). Transactions can be manually entered or uploaded via receipts. Supports bulk actions and dynamic sorting/filtering.
 
-1. **Idempotent Cron Jobs in a Serverless Environment:** 
-   * *Challenge:* Standard serverless functions time out or execute multiple times, causing duplicate financial transactions.
-   * *Solution:* Implemented **Inngest** to decouple background tasks into event-driven workflows. Recurring transactions are processed asynchronously, ensuring reliability and preventing double-billing.
+### Module 2: AI Integration (Receipt Scanner & Insights)
+Utilizes the Google Gemini API to perform Optical Character Recognition (OCR) on uploaded receipts. Additionally, an "AI Report Analysis" feature aggregates the user's financial standing and generates a professional summary.
 
-2. **Multimodal AI Integration & Hallucination Mitigation:**
-   * *Challenge:* OCR models often hallucinate monetary values or format dates incorrectly.
-   * *Solution:* Engineered strict prompting constraints for Gemini AI and piped the output through **Zod schema validation** on the backend, ensuring the database only ingests correctly formatted `Float` and `DateTime` objects.
-
-3. **Type-Safe Full-Stack Data Flow:**
-   * *Challenge:* Ensuring frontend UI components perfectly align with database schema changes.
-   * *Solution:* Used **Prisma** to generate strict TypeScript types. Passed data securely through Next.js Server Actions, eliminating the need for boilerplate REST API types and guaranteeing end-to-end type safety.
+### Module 3: Budgeting & Goals
+Users can define monthly budgets and long-term financial goals (e.g., buying a car). The system visually tracks progress and utilizes event-driven background jobs to dispatch email alerts when thresholds are reached.
 
 ---
 
-## 🚀 Getting Started
+## 8. Setup & Installation
 
-To run this project locally, follow these steps:
+To run this project locally for evaluation or development:
 
-### 1. Clone & Install
-```bash
-git clone https://github.com/Aditya04567/Ai--Finance-tracker.git
-cd Ai--Finance-tracker
-npm install
-```
+### Prerequisites
+* Node.js (v18 or higher)
+* npm or yarn
+* Accounts on Supabase, Clerk, Inngest, Resend, ArcJet, and Google AI Studio.
 
-### 2. Environment Configuration
-Create a `.env` file in the root directory and populate it with your respective API keys:
-```env
-# Database (Supabase)
-DATABASE_URL="your_supabase_pooler_url"
-DIRECT_URL="your_supabase_direct_url"
+### Installation Steps
 
-# Authentication (Clerk)
-NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY="your_publishable_key"
-CLERK_SECRET_KEY="your_secret_key"
-NEXT_PUBLIC_CLERK_SIGN_IN_URL=/sign-in
-NEXT_PUBLIC_CLERK_SIGN_UP_URL=/sign-up
-NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL=/onboarding
-NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL=/onboarding
+1. **Clone the Repository**
+   ```bash
+   git clone https://github.com/Aditya04567/Ai--Finance-tracker.git
+   cd Ai--Finance-tracker
+   npm install
+   ```
 
-# AI & Services
-GEMINI_API_KEY="your_gemini_api_key"
-RESEND_API_KEY="your_resend_api_key"
-ARCJET_KEY="your_arcjet_key"
-```
+2. **Environment Variables**
+   Create a `.env` file in the root directory:
+   ```env
+   # Database (Supabase)
+   DATABASE_URL="your_supabase_pooler_url"
+   DIRECT_URL="your_supabase_direct_url"
 
-### 3. Database Initialization
-Synchronize the Prisma schema with your Supabase PostgreSQL instance:
-```bash
-npx prisma db push
-```
+   # Authentication (Clerk)
+   NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY="your_publishable_key"
+   CLERK_SECRET_KEY="your_secret_key"
+   NEXT_PUBLIC_CLERK_SIGN_IN_URL=/sign-in
+   NEXT_PUBLIC_CLERK_SIGN_UP_URL=/sign-up
+   NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL=/onboarding
+   NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL=/onboarding
 
-### 4. Run Development Servers
-Start the Next.js app and the local Inngest dev server concurrently:
-```bash
-# Terminal 1: Next.js
-npm run dev
+   # AI & Services
+   GEMINI_API_KEY="your_gemini_api_key"
+   RESEND_API_KEY="your_resend_api_key"
+   ARCJET_KEY="your_arcjet_key"
+   ```
 
-# Terminal 2: Inngest (for testing background jobs)
-npx inngest-cli@latest dev
-```
+3. **Database Migration**
+   ```bash
+   npx prisma db push
+   ```
+
+4. **Run Development Servers**
+   To test background jobs, run both Next.js and Inngest concurrently:
+   ```bash
+   # Terminal 1: Next.js Server
+   npm run dev
+
+   # Terminal 2: Inngest Background Worker
+   npx inngest-cli@latest dev
+   ```
 
 ---
 
-## 📄 License
-This project is open-source and available under the [MIT License](LICENSE).
+## 9. Results & Screenshots
 
+*(Insert screenshots of the Dashboard, AI Receipt Scanner, Reports page, and Budget Alerts here).*
+
+<img width="1350" height="632" alt="image" src="https://github.com/user-attachments/assets/a63c2086-77ed-4b54-b458-d1c9ff12a0d8" />
+
+---
+
+## 10. Future Scope
+
+While Spendly covers core personal finance needs, future iterations could include:
+* **Plaid Integration:** Direct bank linking to automatically fetch transactions without manual entry or receipt scanning.
+* **Investment Tracking:** Integration with stock market APIs to track portfolio performance alongside liquid cash.
+* **Multi-Currency Support:** Allowing users to log transactions in various currencies with real-time exchange rate conversions.
+
+---
+
+## 11. Conclusion
+
+The Spendly project successfully demonstrates the integration of modern web technologies, serverless architecture, and artificial intelligence. By automating tedious financial data entry and providing proactive alerts, the platform serves as an effective, highly scalable tool for personal financial management. 
+
+---
 <div align="center">
-  <b>Architected and developed by <a href="https://github.com/Aditya04567">Aditya</a></b>
+  <b>Developed by <a href="https://github.com/Aditya04567">Aditya</a></b>
 </div>
