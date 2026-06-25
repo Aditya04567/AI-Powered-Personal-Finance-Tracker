@@ -62,14 +62,7 @@ export function AccountCarousel({ accounts }) {
           onScroll={checkScroll}
           className="flex items-center gap-4 overflow-x-auto pb-4 hide-scrollbar flex-1 scroll-smooth"
         >
-          <Link href="/account/create" className="shrink-0 block">
-            <div className="w-[260px] h-[100px] border-2 border-dashed border-slate-200 rounded-2xl flex flex-col items-center justify-center text-slate-500 hover:text-[#6b46c1] hover:border-[#6b46c1] hover:bg-slate-50 transition-all bg-white cursor-pointer">
-              <div className="w-8 h-8 rounded-full bg-purple-50 text-[#6b46c1] flex items-center justify-center mb-1.5">
-                <Plus className="w-4 h-4" />
-              </div>
-              <span className="text-[10px] font-bold">Add New Account</span>
-            </div>
-          </Link>
+
           
           {accounts?.map((account, index) => (
             <AccountCard key={account.id} account={account} index={index} />

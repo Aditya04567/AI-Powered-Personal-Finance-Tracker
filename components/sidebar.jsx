@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { useUser } from "@clerk/nextjs";
+import { useUser, UserButton } from "@clerk/nextjs";
 import { 
   LayoutDashboard, 
   ReceiptText, 
@@ -33,7 +33,7 @@ export function Sidebar({ isCollapsed, setIsCollapsed }) {
 
   return (
     <aside 
-      className={`bg-white border-r border-slate-100 flex flex-col h-screen fixed left-0 top-0 hidden lg:flex font-sans transition-all duration-300 ${
+      className={`bg-white border-r border-slate-100 flex flex-col h-screen hidden lg:flex shrink-0 font-sans transition-all duration-300 z-10 ${
         isCollapsed ? "w-[80px]" : "w-[250px]"
       }`}
     >
@@ -87,12 +87,22 @@ export function Sidebar({ isCollapsed, setIsCollapsed }) {
         {/* User Profile */}
         {user && (
           <div 
-            className={`flex items-center rounded-xl hover:bg-slate-50 cursor-pointer transition-colors ${
+            className={`flex items-center rounded-xl hover:bg-slate-50 cursor-pointer transition-colors relative ${
               isCollapsed ? "justify-center p-2" : "justify-between p-2"
             }`}
             title={isCollapsed ? user.firstName || "User" : undefined}
           >
-            <div className="flex items-center gap-3 overflow-hidden">
+            <div className="absolute inset-0 z-10 opacity-0 overflow-hidden cursor-pointer">
+              <UserButton 
+                appearance={{ 
+                  elements: { 
+                    rootBox: "w-full h-full",
+                    userButtonTrigger: "w-full h-full",
+                  } 
+                }} 
+              />
+            </div>
+            <div className="flex items-center gap-3 overflow-hidden pointer-events-none">
               <div className="w-10 h-10 rounded-full bg-slate-700 text-white flex items-center justify-center text-sm font-semibold shrink-0">
                 {user.firstName?.charAt(0) || user.emailAddresses[0]?.emailAddress?.charAt(0)?.toUpperCase()}
               </div>
@@ -103,7 +113,7 @@ export function Sidebar({ isCollapsed, setIsCollapsed }) {
                 </div>
               )}
             </div>
-            {!isCollapsed && <ChevronRight className="w-4 h-4 text-slate-400 shrink-0" />}
+            {!isCollapsed && <ChevronRight className="w-4 h-4 text-slate-400 shrink-0 pointer-events-none" />}
           </div>
         )}
       </div>

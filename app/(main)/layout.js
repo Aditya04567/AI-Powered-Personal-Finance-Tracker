@@ -16,7 +16,7 @@ const MainLayout = ({ children }) => {
       <Sidebar isCollapsed={isCollapsed} setIsCollapsed={setIsCollapsed} />
       
       {/* Main Content Area */}
-      <main className={`flex-1 overflow-y-auto w-full p-4 sm:p-6 lg:p-10 transition-all duration-300 ${isCollapsed ? "lg:ml-[80px]" : "lg:ml-[250px]"}`}>
+      <main className="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-10 transition-all duration-300 w-full">
         {children}
       </main>
     </div>

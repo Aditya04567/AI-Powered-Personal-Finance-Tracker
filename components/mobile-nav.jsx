@@ -4,7 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { useUser } from "@clerk/nextjs";
+import { useUser, UserButton } from "@clerk/nextjs";
 import { 
   Menu,
   X,
@@ -128,8 +128,18 @@ export function MobileNav() {
 
           {/* User Profile */}
           {user && (
-            <div className="flex items-center justify-between p-2 rounded-xl hover:bg-slate-50 transition-colors cursor-pointer">
-              <div className="flex items-center gap-3 overflow-hidden">
+            <div className="flex items-center justify-between p-2 rounded-xl hover:bg-slate-50 transition-colors cursor-pointer relative">
+              <div className="absolute inset-0 z-10 opacity-0 overflow-hidden cursor-pointer">
+                <UserButton 
+                  appearance={{ 
+                    elements: { 
+                      rootBox: "w-full h-full",
+                      userButtonTrigger: "w-full h-full",
+                    } 
+                  }} 
+                />
+              </div>
+              <div className="flex items-center gap-3 overflow-hidden pointer-events-none">
                 <div className="w-10 h-10 rounded-full bg-slate-700 text-white flex items-center justify-center text-sm font-semibold shrink-0">
                   {user.firstName?.charAt(0) || user.emailAddresses[0]?.emailAddress?.charAt(0)?.toUpperCase()}
                 </div>
@@ -138,7 +148,7 @@ export function MobileNav() {
                   <p className="text-[10px] text-slate-500 font-medium truncate">{user.emailAddresses[0]?.emailAddress}</p>
                 </div>
               </div>
-              <ChevronRight className="w-4 h-4 text-slate-400 shrink-0" />
+              <ChevronRight className="w-4 h-4 text-slate-400 shrink-0 pointer-events-none" />
             </div>
           )}
         </div>
